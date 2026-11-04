@@ -1,0 +1,180 @@
+<!doctype html><html lang="ro"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>OrarSmart</title><meta name="theme-color" content="#4338CA">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/favicon-32.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="OrarSmart">
+<style>
+:root{--bg:#F4F5FA;--card:#fff;--ink:#171A2E;--mut:#646A86;--line:#E6E8F2;--pri:#4338CA;--pb:#ECEBFC;--on:#fff;--warn:#C2410C;--wb:#FFF0E6;--ok:#0E8F78;--ob:#DDF4EE;--sh:0 1px 2px rgba(23,26,46,.06),0 8px 24px rgba(23,26,46,.06);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-t=light]){--bg:#0D0F20;--card:#171A33;--ink:#EDEEFA;--mut:#9AA0C4;--line:#2A2E52;--pri:#948FFF;--pb:#262A55;--on:#0D0F20;--warn:#FF9F6B;--wb:#3A2820;--ok:#3DD6B8;--ob:#14393A;--sh:none;color-scheme:dark}}
+:root[data-t=dark]{--bg:#0D0F20;--card:#171A33;--ink:#EDEEFA;--mut:#9AA0C4;--line:#2A2E52;--pri:#948FFF;--pb:#262A55;--on:#0D0F20;--warn:#FF9F6B;--wb:#3A2820;--ok:#3DD6B8;--ob:#14393A;--sh:none;color-scheme:dark}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Segoe UI Variable","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+#app{display:grid;grid-template-columns:252px 1fr;height:100%}
+#side{background:var(--card);border-right:1px solid var(--line);padding:24px 14px;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:20px;letter-spacing:-.02em;margin:0 8px 26px}
+.lg{width:34px;height:34px;border-radius:11px;background:var(--pri);color:var(--on);display:grid;place-items:center}
+.nb{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;font-weight:600;color:var(--mut);text-align:left;position:relative}
+.nb:hover{background:var(--bg);color:var(--ink)}.nb[aria-current=page]{background:var(--pb);color:var(--pri)}
+.bg{margin-left:auto;min-width:20px;height:20px;border-radius:10px;background:var(--warn);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;padding:0 6px}
+.sp{flex:1}.me{display:flex;gap:11px;align-items:center;padding:12px;border-radius:14px;background:var(--bg)}
+.av{width:38px;height:38px;border-radius:50%;background:var(--pri);color:var(--on);display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
+.me b{display:block;line-height:1.2}.me div span{font-size:13px;color:var(--mut)}
+main{overflow-y:auto}.wrap{max-width:1120px;margin:0 auto;padding:32px clamp(16px,3.5vw,44px) 48px}
+.ph{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px}
+h1{font-size:clamp(26px,3.4vw,34px);line-height:1.15;margin:0;letter-spacing:-.025em}.sb{color:var(--mut);margin:4px 0 0}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:28px;align-items:start}
+.side2{display:grid;gap:18px;position:sticky;top:24px}
+.wk{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:22px}
+.wd{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 0 9px;border-radius:16px;background:var(--card);box-shadow:var(--sh);color:var(--mut);position:relative}
+.wd b{font-size:20px;color:var(--ink);line-height:1.2}.wd span{font-size:13px;font-weight:600}
+.wd[aria-pressed=true]{background:var(--pri);color:var(--on)}.wd[aria-pressed=true] b{color:var(--on)}
+.wd .tdy{position:absolute;top:7px;right:9px;width:6px;height:6px;border-radius:50%;background:var(--pri)}.wd[aria-pressed=true] .tdy{background:var(--on)}
+.wd .cg{position:absolute;bottom:6px;width:6px;height:6px;border-radius:50%;background:var(--warn)}
+.wd.hc{padding-bottom:16px}
+.ls{display:grid;grid-template-columns:50px 1fr;gap:14px;margin-bottom:12px}
+.tm{text-align:right;padding-top:15px;font-variant-numeric:tabular-nums}.tm b{display:block;font-size:16px}.tm span{font-size:13px;color:var(--mut)}
+.cd{position:relative;background:color-mix(in srgb,var(--c) 9%,var(--card));border-radius:18px;padding:14px 16px 14px 22px;box-shadow:var(--sh);overflow:hidden;min-width:0}
+.cd::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--c)}
+.ls.now .cd{outline:2px solid var(--c)}
+.ls.chg .cd{background:var(--wb);outline:2px solid var(--warn)}.ls.chg .cd::before{background:var(--warn)}
+.hd{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.hd b{font-size:17px}
+.chip{font-size:12px;font-weight:700;border-radius:99px;padding:2px 10px;background:var(--pb);color:var(--pri)}
+.chip.w{background:var(--warn);color:#fff}.chip.o{background:var(--ok);color:#fff}
+.mt{display:flex;gap:6px 18px;flex-wrap:wrap;color:var(--mut);margin-top:6px;font-size:14px}
+.mt span{display:inline-flex;align-items:center;gap:6px}.mt svg{width:16px;height:16px}
+s{opacity:.65}.why{font-size:13px;color:var(--mut);margin-top:6px}
+.hero{background:var(--pri);color:var(--on);border-radius:24px;padding:22px 22px 20px}
+.hero .hl{font-weight:600;opacity:.85;margin:0}.hero h2{margin:4px 0 2px;font-size:30px;line-height:1.15;letter-spacing:-.02em}.hero p{margin:0}
+.hero .bar{height:8px;border-radius:9px;background:rgba(255,255,255,.28);margin:18px 0 8px;overflow:hidden}.hero .bar i{display:block;height:100%;background:currentColor;border-radius:9px}
+.hero .hs{font-size:14px;opacity:.9}
+.box{background:var(--card);border-radius:20px;padding:18px;box-shadow:var(--sh)}.box h3{margin:0 0 10px;font-size:16px}
+.ok{display:flex;gap:10px;align-items:center;color:var(--ok);font-weight:600}
+.ci{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line);font-size:14px}.ci:first-of-type{border:0}.ci svg{color:var(--warn);margin-top:2px}
+.st{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}
+.st div{background:var(--card);border-radius:18px;padding:14px 16px;box-shadow:var(--sh);color:var(--mut);font-size:14px}.st b{display:block;font-size:28px;color:var(--ink);line-height:1.2}
+.btn{background:var(--pri);color:var(--on);border-radius:12px;padding:10px 16px;font-weight:600}
+.btn.s{background:var(--pb);color:var(--pri)}.btn.d{background:var(--wb);color:var(--warn)}.btn:disabled{opacity:.4;cursor:default}
+.btn:not(:disabled):hover{filter:brightness(1.08)}.act{margin-top:12px}
+.pn{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);display:grid;gap:10px}.pn small{color:var(--mut);display:block;font-weight:400}
+.pn label{display:flex;gap:12px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 12px}
+.pn label:has(input:checked){border-color:var(--pri);background:var(--pb)}.pn input[type=radio]{accent-color:var(--pri);width:18px;height:18px}
+.pn .av{width:34px;height:34px;font-size:13px;background:var(--pb);color:var(--pri)}
+select{font:inherit;padding:10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);width:100%}
+.r2{display:flex;gap:10px;flex-wrap:wrap}.r2>*{flex:1 1 150px}
+.nt{display:flex;gap:14px;background:var(--card);border-radius:18px;padding:14px 16px;margin-bottom:10px;box-shadow:var(--sh)}
+.ni{width:40px;height:40px;border-radius:50%;background:var(--wb);color:var(--warn);display:grid;place-items:center;flex:none}.ni.v{background:var(--ob);color:var(--ok)}
+.nt time{display:block;color:var(--mut);font-size:13px;margin-top:2px}
+.emp{background:var(--card);border-radius:20px;padding:36px 20px;text-align:center;color:var(--mut);box-shadow:var(--sh)}.emp svg{width:34px;height:34px;margin-bottom:8px}
+.gt{font-weight:700;font-size:13px;color:var(--mut);margin:22px 4px 8px}
+.set{background:var(--card);border-radius:20px;padding:4px 18px;box-shadow:var(--sh)}
+.sr{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}.sr:last-child{border:0}
+.sr small{display:block;color:var(--mut)}
+.seg{display:flex;background:var(--bg);border-radius:12px;padding:3px;gap:2px}.seg button{padding:7px 12px;border-radius:10px;font-weight:600;color:var(--mut);font-size:14px}
+.seg button[aria-pressed=true]{background:var(--card);color:var(--pri);box-shadow:var(--sh)}
+.sw{width:50px;height:30px;border-radius:99px;background:var(--line);position:relative;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
+.sw[aria-pressed=true]{background:var(--ok)}.sw[aria-pressed=true]::after{transform:translateX(20px)}
+@media(max-width:1000px){.cols{grid-template-columns:1fr}.side2{position:static;order:-1}.hm{display:none}}
+@media(max-width:800px){
+#app{grid-template-columns:1fr;grid-template-rows:1fr auto}
+#side{grid-row:2;flex-direction:row;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));border-right:0;border-top:1px solid var(--line);gap:2px}
+.brand,.sp,.me{display:none}
+.nb{flex:1;flex-direction:column;gap:2px;font-size:12px;padding:7px 2px;justify-content:center;min-width:0;border-radius:14px}
+.bg{position:absolute;top:2px;left:calc(50% + 6px);min-width:18px;height:18px;font-size:11px}
+.wrap{padding-top:calc(22px + env(safe-area-inset-top,0px))}
+.ls{grid-template-columns:44px 1fr;gap:10px}.st b{font-size:24px}.st div{padding:12px}
+.hero h2{font-size:26px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<div id="app"><aside id="side" aria-label="Navigare"></aside><main id="main" tabindex="-1"></main></div>
+<script>
+const DAYS=["Luni","Marți","Miercuri","Joi","Vineri"],SH=["Lu","Ma","Mi","Jo","Vi"];
+const TM=[["08:00","08:45"],["08:55","09:40"],["09:50","10:35"],["10:55","11:40"],["11:50","12:35"]];
+const SUBJ={mat:"Matematică",info:"Informatică",fiz:"Fizică",rom:"Limba română",ist:"Istorie",eng:"Engleză"};
+const COL={mat:"#3B82F6",info:"#0EA5A4",fiz:"#8B5CF6",rom:"#EC4899",ist:"#D97706",eng:"#16A34A"};
+const TCH=[["cojocaru","Prof. Cojocaru","mat"],["rusu","Prof. Rusu","info"],["munteanu","Prof. Munteanu","fiz"],["ceban","Prof. Ceban","rom"],["lungu","Prof. Lungu","ist"],["moraru","Prof. Moraru","eng"],["turcan","Prof. Țurcan","fiz"],["bejan","Prof. Bejan","mat"],["gisca","Prof. Gîscă","info"],["popa","Prof. Popa","rom"],["sandu","Prof. Sandu","eng"],["vrabie","Prof. Vrabie","ist"]].map(([id,n,s])=>({id,n,s}));
+const BUSY={turcan:["0-3","1-3","2-4"],bejan:["0-2","3-1"],gisca:["1-4"],popa:[],sandu:["2-0"],vrabie:["0-0"]};
+const ROOMS=["Sala 5","Sala 8","Sala 14","Sala 22","Sala 31","Laborator 3"];
+const L=(s,t,r)=>({s,t,r});
+const TT=[[L("mat","cojocaru","Sala 14"),L("info","rusu","Laborator 3"),L("fiz","munteanu","Sala 22"),L("rom","ceban","Sala 8"),L("eng","moraru","Sala 31")],
+[L("rom","ceban","Sala 8"),L("mat","cojocaru","Sala 14"),L("ist","lungu","Sala 5"),L("fiz","munteanu","Sala 22"),L("info","rusu","Laborator 3")],
+[L("eng","moraru","Sala 31"),L("fiz","munteanu","Sala 22"),L("mat","cojocaru","Sala 14"),L("info","rusu","Laborator 3"),L("ist","lungu","Sala 5")],
+[L("mat","cojocaru","Sala 14"),L("rom","ceban","Sala 8"),L("info","rusu","Laborator 3"),L("eng","moraru","Sala 31"),L("fiz","munteanu","Sala 22")],
+[L("ist","lungu","Sala 5"),L("mat","cojocaru","Sala 14"),L("fiz","munteanu","Sala 22"),L("rom","ceban","Sala 8")]];
+const T=id=>TCH.find(x=>x.id===id);
+const IC={orar:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',nt:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4l2-2zM10 21h4"/>',adm:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>',door:'<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="15" cy="12" r="1"/>',swap:'<path d="M4 8h13l-3-3M20 16H7l3 3"/>',ok:'<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',back:'<path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/>'};
+const ic=n=>`<svg viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`;
+const KEY="orarsmart-app-v2";
+let S=Object.assign({v:"orar",role:"elev",day:null,ch:{},nt:[],theme:"auto",ntf:true,seen:0},JSON.parse(localStorage.getItem(KEY)||"{}"));
+let X={open:null,sel:null,rm:"",rs:"Boală",pwa:null};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const $=s=>document.querySelector(s);
+const wkend=()=>[0,6].includes(new Date().getDay());
+const today=()=>wkend()?0:(new Date().getDay()+6)%7;
+const dates=()=>{const n=new Date(),g=n.getDay(),o=-((g+6)%7)+(wkend()?7:0);return[0,1,2,3,4].map(i=>new Date(n.getFullYear(),n.getMonth(),n.getDate()+o+i))};
+const isToday=d=>!wkend()&&d===today();
+if(S.day===null)S.day=today();
+const mins=s=>TM[s].map(x=>+x.slice(0,2)*60+ +x.slice(3));
+const eff=(d,s)=>{const l=TT[d][s],c=S.ch[d+"-"+s];return{l,c,subj:SUBJ[l.s],tn:T(c?c.by:l.t).n,on:T(l.t).n,room:c?c.room:l.r}};
+const nowM=()=>{const n=new Date();return n.getHours()*60+n.getMinutes()};
+function nav(){const u=S.nt.length-S.seen;
+const it=[["orar","Orar"],["nt","Notificări"],...(S.role==="admin"?[["adm","Admin"]]:[]),["set","Setări"]];
+$("#side").innerHTML=`<div class="brand"><span class="lg">${ic("orar")}</span>OrarSmart</div>`+it.map(([k,n])=>`<button class="nb" data-v="${k}" ${S.v===k?'aria-current="page"':""}>${ic(k)}${n}${k==="nt"&&u>0?`<span class="bg">${u}</span>`:""}</button>`).join("")+`<div class="sp"></div><div class="me"><span class="av">10B</span><div><b>Clasa a 10-a B</b><span>${S.role==="admin"?"Administrator":"Elev"}</span></div></div>`}
+function week(){const ds=dates();return '<div class="wk" role="group" aria-label="Zilele săptămânii">'+ds.map((dt,i)=>{const cg=Object.keys(S.ch).some(k=>k.startsWith(i+"-"));return `<button class="wd" data-day="${i}" aria-pressed="${S.day===i}"><span>${SH[i]}</span><b>${dt.getDate()}</b>${isToday(i)?'<i class="tdy"></i>':""}${cg?'<i class="cg"></i>':""}</button>`}).join("")+"</div>"}
+function lesson(d,s,adm){const e=eff(d,s),c=e.c,l=e.l,[a,b]=mins(s),nm=nowM(),now=isToday(d)&&nm>=a&&nm<b;
+const chip=c?'<span class="chip w">Înlocuire</span>':now?'<span class="chip">Acum</span>':"";
+const k=d+"-"+s;let act="";
+if(adm)act=c?`<div class="act"><button class="btn s" data-undo="${k}">${"Revino la orarul inițial"}</button></div>`:X.open===k?panel(d,s):`<div class="act"><button class="btn s" data-abs="${k}">Profesorul lipsește</button></div>`;
+return `<div class="ls ${now?"now":""} ${c?"chg":""}" style="--c:${COL[l.s]}"><div class="tm"><b>${TM[s][0]}</b><span>${TM[s][1]}</span></div><div class="cd"><div class="hd"><b>${e.subj}</b>${chip}</div><div class="mt"><span>${ic("user")}${c?`${e.tn} <s>${e.on}</s>`:e.tn}</span><span>${ic("door")}${c&&c.room!==l.r?`${c.room} <s>${l.r}</s>`:e.room}</span></div>${c&&adm?`<div class="why">Motiv: ${c.why}</div>`:""}${act}</div></div>`}
+function cands(d,s){const l=TT[d][s];return TCH.filter(x=>x.id!==l.t&&!(BUSY[x.id]||[]).includes(d+"-"+s)).map(x=>({...x,best:x.s===l.s})).sort((a,b)=>b.best-a.best)}
+function panel(d,s){const l=TT[d][s],cs=cands(d,s);
+return `<div class="pn"><b>Profesori liberi la ora ${s+1}<small>Aplicația a căutat profesori disponibili. Cei care predau ${SUBJ[l.s]} sunt primii.</small></b>`+
+cs.slice(0,4).map(c=>`<label><input type="radio" name="cand" value="${c.id}" ${X.sel===c.id?"checked":""}><span class="av">${c.n.split(" ").pop()[0]}</span><span><b>${c.n}</b>${c.best?' <span class="chip o">Recomandat</span>':""}<small>${c.best?"Predă "+SUBJ[l.s]:"Liber, dar predă "+SUBJ[c.s]}</small></span></label>`).join("")+
+`<div class="r2"><select id="rm" aria-label="Sala">${["",...ROOMS.filter(r=>r!==l.r)].map(r=>`<option value="${r}" ${X.rm===r?"selected":""}>${r?"Mută în "+r:"Aceeași sală ("+l.r+")"}</option>`).join("")}</select><select id="rs" aria-label="Motiv">${["Boală","Curs de pregătire","Concediu","Alt motiv"].map(r=>`<option ${X.rs===r?"selected":""}>${r}</option>`).join("")}</select></div>
+<div class="r2"><button class="btn" data-ok="${d}-${s}" ${X.sel?"":"disabled"}>Confirmă înlocuirea</button><button class="btn s" data-cancel>Anulează</button></div></div>`}
+function hero(){const g=new Date().getDay();const box=(a,b,c)=>`<section class="hero"><p class="hl">${a}</p><h2>${b}</h2><p>${c}</p></section>`;
+if(wkend())return box("Weekend","Fără lecții","Următoarea zi de școală: luni.");
+const d=today(),nm=nowM();let cur=-1,nx=-1;TT[d].forEach((_,s)=>{const[a,b]=mins(s);if(nm>=a&&nm<b)cur=s;else if(nm<a&&nx<0)nx=s});
+if(cur>=0){const e=eff(d,cur),[a,b]=mins(cur),p=Math.round((nm-a)/(b-a)*100);return `<section class="hero"><p class="hl">Acum, ora ${cur+1}</p><h2>${e.subj}</h2><p>${e.tn} · ${e.room}</p><div class="bar"><i style="width:${p}%"></i></div><p class="hs">Se termină la ${TM[cur][1]} · mai sunt ${b-nm} min</p></section>`}
+if(nx>=0){const e=eff(d,nx);return `<section class="hero"><p class="hl">Urmează la ${TM[nx][0]}</p><h2>${e.subj}</h2><p>${e.tn} · ${e.room}</p><div class="bar"><i style="width:0"></i></div><p class="hs">Peste ${mins(nx)[0]-nm} min</p></section>`}
+return box("Azi","Lecțiile s-au terminat","Ne vedem la următoarea oră.")}
+function todayBox(){const d=today(),ks=Object.keys(S.ch).filter(k=>k.startsWith(d+"-")).sort();
+return `<div class="box"><h3>Schimbări azi</h3>`+(wkend()?`<div class="ok">${ic("ok")}Nu sunt lecții</div>`:ks.length?ks.map(k=>{const s=+k.split("-")[1],e=eff(d,s);return `<div class="ci">${ic("swap")}<span>Ora ${s+1}, ${e.subj}: ${e.tn} în loc de ${e.on}${e.room!==e.l.r?`, ${e.room}`:""}</span></div>`}).join(""):`<div class="ok">${ic("ok")}Totul e conform orarului</div>`)+"</div>"}
+function head(t,sub){return `<div class="ph"><div><h1>${t}</h1><p class="sb">${sub}</p></div></div>`}
+function dayLine(){const dt=dates()[S.day];return `Clasa a 10-a B · ${DAYS[S.day]}, ${dt.toLocaleDateString("ro-RO",{day:"numeric",month:"long"})}`}
+function view(){nav();const m=$("#main");let h="";
+if(S.v==="orar")h=`<div class="wrap">${head("Orarul meu",dayLine())}<div class="cols"><div>${week()}${TT[S.day].map((_,i)=>lesson(S.day,i,false)).join("")}</div><div class="side2">${hero()}<div class="hm">${todayBox()}</div></div></div></div>`;
+else if(S.v==="nt"){S.seen=S.nt.length;save();nav();h=`<div class="wrap" style="max-width:760px">${head("Notificări","Schimbările confirmate de administrație apar aici.")}${S.nt.length?S.nt.map(n=>`<div class="nt"><span class="ni ${n.k==="rev"?"v":""}">${ic(n.k==="rev"?"back":"swap")}</span><div>${n.t}<time>${n.at}</time></div></div>`).join(""):`<div class="emp">${ic("nt")}<br>Nicio notificare încă.<br>Când o lecție se schimbă, o vei vedea aici.</div>`}</div>`}
+else if(S.v==="adm")h=`<div class="wrap" style="max-width:820px">${head("Panou administrator","Marchează o absență, alege înlocuitorul și confirmă. Elevii primesc notificarea.")}<div class="st"><div><b>${Object.keys(S.ch).length}</b>înlocuiri active</div><div><b>${S.nt.length}</b>notificări trimise</div><div><b>${TCH.length}</b>profesori</div></div>${week()}${TT[S.day].map((_,i)=>lesson(S.day,i,true)).join("")}</div>`;
+else{const sg=(a,k,v)=>`<div class="seg">${a.map(([x,n])=>`<button data-${k}="${x}" aria-pressed="${v===x}">${n}</button>`).join("")}</div>`;
+h=`<div class="wrap" style="max-width:760px">${head("Setări","Aspect, notificări și mod de utilizare.")}<p class="gt">Cont</p><div class="set"><div class="sr"><span>Mod<small>Administratorul poate marca absențe</small></span>${sg([["elev","Elev"],["admin","Administrator"]],"role",S.role)}</div></div>
+<p class="gt">Aspect</p><div class="set"><div class="sr"><span>Temă</span>${sg([["auto","Auto"],["light","Luminos"],["dark","Întunecat"]],"th",S.theme)}</div></div>
+<p class="gt">Notificări</p><div class="set"><div class="sr"><span>Mesaje pe dispozitiv<small>Primești un mesaj la fiecare înlocuire</small></span><button class="sw" id="ntf" role="switch" aria-pressed="${S.ntf}" aria-label="Mesaje pe dispozitiv"></button></div></div>
+${X.pwa?`<p class="gt">Telefon</p><div class="set"><div class="sr"><span>Instalează aplicația<small>O adaugi pe ecranul principal</small></span><button class="btn" id="inst">Instalează</button></div></div>`:""}
+<p class="gt">Date</p><div class="set"><div class="sr"><span>Date demo<small>Șterge înlocuirile și notificările</small></span><button class="btn d" id="rst">Resetează</button></div></div><p class="sb" style="margin-top:22px">OrarSmart · Echipa SmartTeam · versiunea 3.0</p></div>`}
+m.innerHTML=h;if(S.theme==="auto")delete document.documentElement.dataset.t;else document.documentElement.dataset.t=S.theme}
+function notify(t,k){const at=new Date().toLocaleString("ro-RO",{weekday:"short",hour:"2-digit",minute:"2-digit"});S.nt.unshift({t,at,k:k||"chg"});
+if(S.ntf){try{if(Notification.permission==="granted")new Notification("OrarSmart",{body:t,icon:"icons/icon-192.png"});else if(Notification.permission==="default")Notification.requestPermission()}catch(e){}}}
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const D=b.dataset;
+if(D.v){S.v=D.v;X.open=null}
+else if(D.day!==undefined){S.day=+D.day;X.open=null}
+else if(D.abs){X.open=D.abs;X.sel=null;X.rm="";X.rs="Boală"}
+else if(D.cancel!==undefined)X.open=null;
+else if(D.ok){const[d,s]=D.ok.split("-").map(Number),l=TT[d][s],room=X.rm||l.r;S.ch[D.ok]={by:X.sel,room,why:X.rs};
+notify(`${DAYS[d]}, ora ${s+1}, ${SUBJ[l.s]}: ${T(X.sel).n} înlocuiește ${T(l.t).n}${room!==l.r?`. Sala nouă: ${room} (era ${l.r})`:""}.`);X.open=null}
+else if(D.undo){delete S.ch[D.undo];const[d,s]=D.undo.split("-").map(Number);notify(`${DAYS[d]}, ora ${s+1}, ${SUBJ[TT[d][s].s]}: lecția revine la orarul inițial.`,"rev")}
+else if(D.role){S.role=D.role;if(D.role==="elev"&&S.v==="adm")S.v="set"}
+else if(D.th)S.theme=D.th;
+else if(b.id==="ntf")S.ntf=!S.ntf;
+else if(b.id==="inst"&&X.pwa){X.pwa.prompt();X.pwa=null}
+else if(b.id==="rst"){if(confirm("Ștergi toate înlocuirile și notificările?")){S.ch={};S.nt=[];S.seen=0}}
+else return;save();view()});
+document.addEventListener("change",e=>{if(e.target.name==="cand"){X.sel=e.target.value;const b=$("[data-ok]");if(b)b.disabled=false}if(e.target.id==="rm")X.rm=e.target.value;if(e.target.id==="rs")X.rs=e.target.value});
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();X.pwa=e;if(S.v==="set")view()});
+setInterval(()=>{if(S.v==="orar"&&!X.open)view()},60000);
+view();
+if("serviceWorker"in navigator&&/^https?:$/.test(location.protocol))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+</script></body></html>

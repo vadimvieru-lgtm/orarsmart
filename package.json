@@ -1,0 +1,16 @@
+{
+  "name": "orarsmart",
+  "version": "2.0.0",
+  "description": "OrarSmart - orarul școlar inteligent cu notificări de înlocuire în timp real",
+  "author": "Echipa SmartTeam",
+  "license": "UNLICENSED",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "node scripts/pack.js"
+  },
+  "devDependencies": {
+    "@electron/packager": "^18.3.6",
+    "electron": "^33.2.0"
+  }
+}
