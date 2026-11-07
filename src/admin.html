@@ -1,0 +1,349 @@
+<!doctype html><html lang="ro"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>OrarSmart · Administrare</title><meta name="theme-color" content="#4338CA">
+<style>
+:root{--bg:#F4F5FA;--card:#fff;--ink:#171A2E;--mut:#646A86;--line:#E6E8F2;--pri:#4338CA;--pb:#ECEBFC;--on:#fff;--warn:#C2410C;--wb:#FFF0E6;--ok:#0E8F78;--ob:#DDF4EE;--sh:0 1px 2px rgba(23,26,46,.06),0 8px 24px rgba(23,26,46,.06);color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#0D0F20;--card:#171A33;--ink:#EDEEFA;--mut:#9AA0C4;--line:#2A2E52;--pri:#948FFF;--pb:#262A55;--on:#0D0F20;--warn:#FF9F6B;--wb:#3A2820;--ok:#3DD6B8;--ob:#14393A;--sh:none;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Segoe UI Variable","Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}
+:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px clamp(14px,3vw,32px);background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.brand{font-weight:800;font-size:18px;letter-spacing:-.02em;margin-right:auto}.brand small{font-weight:600;color:var(--mut);margin-left:8px}
+.who{color:var(--mut);font-size:13px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px clamp(14px,3vw,32px);background:var(--card);border-bottom:1px solid var(--line)}
+nav button{border:0;background:none;padding:8px 14px;border-radius:10px;font-weight:600;color:var(--mut);white-space:nowrap}
+nav button[aria-current=page]{background:var(--pb);color:var(--pri)}
+main{max-width:1180px;margin:0 auto;padding:22px clamp(14px,3vw,32px) 60px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.02em}.sub{color:var(--mut);margin:0 0 18px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.btn{border:0;background:var(--pri);color:var(--on);padding:9px 16px;border-radius:11px;font-weight:700}
+.btn.s{background:var(--pb);color:var(--pri)}.btn.d{background:var(--wb);color:var(--warn)}.btn:disabled{opacity:.5}
+input,select{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;min-width:0}
+label.f{display:grid;gap:4px;font-weight:600;font-size:13px;color:var(--mut)}label.f input,label.f select{font-weight:400;color:var(--ink);font-size:15px}
+.card{background:var(--card);border-radius:16px;box-shadow:var(--sh);border:1px solid var(--line)}
+.grid{overflow-x:auto;padding-bottom:6px}
+table.tt{border-collapse:separate;border-spacing:6px;min-width:760px;width:100%;table-layout:fixed}
+.tt th{font-size:13px;color:var(--mut);font-weight:700;text-align:left;padding:2px 4px}
+.tt th.p{width:84px}.tt td.p{font-size:12px;color:var(--mut);vertical-align:top;padding-top:10px}.tt td.p b{display:block;color:var(--ink);font-size:14px}
+.tt td{vertical-align:top;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px;height:100px}
+.les{display:block;width:100%;text-align:left;border:0;border-left:5px solid var(--c);background:color-mix(in srgb,var(--c) 10%,var(--card));border-radius:8px;padding:5px 8px;margin-bottom:5px}
+.les b{display:block;font-size:13.5px;line-height:1.25}.les small{display:block;color:var(--mut);font-size:12px;line-height:1.3}
+.add{width:100%;border:1px dashed var(--line);background:none;border-radius:8px;color:var(--mut);padding:3px;font-size:18px;line-height:1}.add:hover{border-color:var(--pri);color:var(--pri)}
+.row{display:flex;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}.row:last-child{border-bottom:0}
+.row .m{flex:1;min-width:0}.row .m b{display:block}.row .m span{color:var(--mut);font-size:13px}
+.sw{width:18px;height:18px;border-radius:50%;flex:none}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px;background:var(--ob);color:var(--ok);margin-left:6px}.tag.w{background:var(--wb);color:var(--warn)}
+.ls{display:flex;gap:14px;padding:14px 16px;border-bottom:1px solid var(--line);align-items:center}.ls:last-child{border-bottom:0}
+.ls .t{width:56px;text-align:right;font-variant-numeric:tabular-nums}.ls .t b{display:block}.ls .t span{font-size:12px;color:var(--mut)}
+.ls .m{flex:1;min-width:0}.ls s{color:var(--mut)}
+.empty{padding:34px 16px;text-align:center;color:var(--mut)}
+dialog{border:0;border-radius:18px;padding:0;width:min(520px,94vw);background:var(--card);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(10,12,30,.55)}
+dialog form{padding:20px;display:grid;gap:14px;max-height:88vh;overflow-y:auto}
+dialog h2{margin:0;font-size:19px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chk{display:grid;gap:2px;max-height:210px;overflow-y:auto;border:1px solid var(--line);border-radius:12px;padding:6px}
+.chk label{display:flex;gap:10px;align-items:center;padding:6px 8px;border-radius:8px}.chk label:hover{background:var(--bg)}
+.chk input{width:18px;height:18px;flex:none}
+.err{background:var(--wb);color:var(--warn);padding:10px 12px;border-radius:10px;font-weight:600}
+.acts{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}.acts .l{margin-right:auto}
+.login{max-width:380px;margin:12vh auto;padding:26px}.login form{display:grid;gap:14px}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:12px;font-weight:600;z-index:50;display:none;max-width:92vw}
+#toast.bad{background:var(--warn);color:#fff}
+@media(max-width:560px){.two{grid-template-columns:1fr}}
+</style></head><body>
+<div id="root"></div><dialog id="dlg"></dialog><div id="toast" role="status"></div>
+<script src="config.js"></script><script src="db.js"></script>
+<script>
+"use strict";
+const D = OrarDB, $ = s => document.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const DAYS = ["Luni", "Marți", "Miercuri", "Joi", "Vineri", "Sâmbătă"];
+const REASONS = ["Boală", "Curs de pregătire", "Concediu", "Alt motiv"];
+const hm = t => String(t || "").slice(0, 5);
+let ref = null, me = null;
+const S = { tab: "orar", classId: null, date: "" };
+
+/* ---------- ajutoare de interfață ---------- */
+let toastT;
+function toast(msg, bad) {
+  const t = $("#toast"); t.textContent = msg; t.className = bad ? "bad" : ""; t.style.display = "block";
+  clearTimeout(toastT); toastT = setTimeout(() => (t.style.display = "none"), 3800);
+}
+const guard = fn => async (...a) => { try { return await fn(...a); } catch (e) { toast(e.message, true); } };
+
+function dialog(html, onSubmit) {
+  const d = $("#dlg");
+  d.innerHTML = `<form>${html}<div class="err" hidden></div></form>`;
+  const f = d.querySelector("form"), er = f.querySelector(".err");
+  f.addEventListener("submit", async e => {
+    e.preventDefault(); er.hidden = true;
+    const b = f.querySelector("button[type=submit]"); if (b) b.disabled = true;
+    try { await onSubmit(new FormData(f), f); d.close(); }
+    catch (x) { er.textContent = x.message; er.hidden = false; if (b) b.disabled = false; }
+  });
+  f.addEventListener("click", e => { if (e.target.closest("[data-close]")) d.close(); });
+  d.showModal();
+  return f;
+}
+const opts = (list, sel, blank) =>
+  (blank ? `<option value="">${esc(blank)}</option>` : "") +
+  list.map(([v, l]) => `<option value="${esc(v)}" ${String(v) === String(sel) ? "selected" : ""}>${esc(l)}</option>`).join("");
+const clsName = c => c.short_name || c.display_name;
+const subjName = id => (ref.subjects.find(s => s.id === id) || {}).name || "";
+
+function nextSchoolDay() {
+  const d = new Date(); d.setHours(12);
+  if (d.getDay() === 6) d.setDate(d.getDate() + 2); else if (d.getDay() === 0) d.setDate(d.getDate() + 1);
+  return D.isoDate(d);
+}
+
+/* ---------- pornire: configurare → autentificare → drepturi ---------- */
+async function start() {
+  S.date = nextSchoolDay();
+  if (!D.configured()) {
+    $("#root").innerHTML = `<div class="login card"><h1>Conectare la baza de date</h1><p class="sub">Completează <b>config.js</b> cu adresa și cheia proiectului Supabase (vezi database/README.md), apoi reîncarcă pagina.</p></div>`;
+    return;
+  }
+  if (!D.signedIn()) return loginView();
+  try { me = await D.profile(); } catch (e) { me = null; }
+  if (!me) { await D.signOut(); return loginView("Sesiunea a expirat. Intră din nou."); }
+  if (me.role !== "admin") {
+    $("#root").innerHTML = `<div class="login card"><h1>Acces interzis</h1><p class="sub">Contul <b>${esc(me.email || "")}</b> nu este administrator. Cere unui administrator să-ți schimbe rolul.</p><button class="btn" id="out">Ieși din cont</button></div>`;
+    $("#out").onclick = async () => { await D.signOut(); start(); };
+    return;
+  }
+  ref = await D.loadReference();
+  S.classId = (ref.classes[0] || {}).id || null;
+  shell(); render();
+}
+
+function loginView(msg) {
+  $("#root").innerHTML = `<div class="login card"><h1>OrarSmart</h1><p class="sub">Administrare orar — intră cu contul de administrator.</p>
+  <form id="lf"><label class="f">Email<input name="email" type="email" autocomplete="username" required></label>
+  <label class="f">Parolă<input name="password" type="password" autocomplete="current-password" required></label>
+  <div class="err" id="le" ${msg ? "" : "hidden"}>${esc(msg || "")}</div><button class="btn" type="submit">Intră</button></form></div>`;
+  $("#lf").addEventListener("submit", async e => {
+    e.preventDefault();
+    const f = new FormData(e.target), b = e.target.querySelector("button"); b.disabled = true;
+    try { await D.signIn(f.get("email"), f.get("password")); start(); }
+    catch (x) { const le = $("#le"); le.textContent = x.message; le.hidden = false; b.disabled = false; }
+  });
+}
+
+const TABS = [["orar", "Orar"], ["inl", "Înlocuiri"], ["teachers", "Profesori"], ["subjects", "Materii"], ["rooms", "Săli"], ["classes", "Clase"], ["bells", "Ore de apel"], ["acc", "Conturi"]];
+function shell() {
+  $("#root").innerHTML = `<div class="top"><div class="brand">OrarSmart<small>Administrare</small></div><span class="who">${esc(me.email || "")}</span><button class="btn s" id="out">Ieși</button></div>
+  <nav id="nav">${TABS.map(([k, n]) => `<button data-tab="${k}">${n}</button>`).join("")}</nav><main id="main"></main>`;
+  $("#out").onclick = async () => { await D.signOut(); start(); };
+  $("#nav").onclick = e => { const b = e.target.closest("[data-tab]"); if (b) { S.tab = b.dataset.tab; render(); } };
+}
+const render = guard(async () => {
+  document.querySelectorAll("#nav button").forEach(b => b.setAttribute("aria-current", b.dataset.tab === S.tab ? "page" : "false"));
+  const m = $("#main");
+  m.onclick = m.onchange = null;
+  m.innerHTML = `<div class="empty">Se încarcă…</div>`;
+  if (S.tab === "orar") await viewOrar(m);
+  else if (S.tab === "inl") await viewInl(m);
+  else if (S.tab === "acc") await viewAcc(m);
+  else await viewEntity(m, S.tab);
+});
+const classSelect = () => `<label class="f">Clasa<select id="cls">${opts(ref.classes.map(c => [c.id, c.display_name]), S.classId)}</select></label>`;
+const bindClass = () => { const s = $("#cls"); if (s) s.onchange = () => { S.classId = +s.value; render(); }; };
+
+/* ================= ORAR: grila săptămânii ================= */
+async function viewOrar(m) {
+  if (!ref.classes.length) { m.innerHTML = `<div class="card empty">Adaugă mai întâi o clasă (fila „Clase").</div>`; return; }
+  if (!ref.bells.length) { m.innerHTML = `<div class="card empty">Adaugă mai întâi orele de apel (fila „Ore de apel").</div>`; return; }
+  const tt = await D.loadTimetable(S.classId);
+  S.tt = tt;
+  const nd = Math.max(5, ...tt.map(l => l.day_of_week));
+  let h = `<h1>Orarul clasei</h1><p class="sub">Apasă pe o lecție ca să o modifici sau pe + ca să adaugi una.</p><div class="bar">${classSelect()}</div>
+  <div class="grid"><table class="tt"><thead><tr><th class="p"></th>${DAYS.slice(0, nd).map(d => `<th>${d}</th>`).join("")}</tr></thead><tbody>`;
+  for (const b of ref.bells) {
+    h += `<tr><td class="p"><b>Ora ${b.period}</b>${hm(b.starts_at)}–${hm(b.ends_at)}</td>`;
+    for (let d = 1; d <= nd; d++) {
+      const cell = tt.filter(l => l.day_of_week === d && l.period === b.period);
+      h += `<td>${cell.map(l => `<button class="les" style="--c:${esc(l.color)}" data-edit="${l.lesson_id}"><b>${esc(l.subject_name)}</b>
+        ${l.group_name ? `<small>${esc(l.group_name)}</small>` : ""}<small>${esc(l.room_name || "fără sală")}</small>
+        <small>${l.teachers.length ? l.teachers.map(t => esc(t.name)).join(", ") : "<i>fără profesor</i>"}</small></button>`).join("")}
+        <button class="add" data-new="${d}-${b.period}" aria-label="Adaugă lecție">+</button></td>`;
+    }
+    h += "</tr>";
+  }
+  m.innerHTML = h + "</tbody></table></div>";
+  bindClass();
+  m.onclick = e => {
+    const ed = e.target.closest("[data-edit]"), nw = e.target.closest("[data-new]");
+    if (ed) lessonDialog(S.tt.find(l => l.lesson_id === +ed.dataset.edit));
+    if (nw) { const [d, p] = nw.dataset.new.split("-").map(Number); lessonDialog(null, d, p); }
+  };
+}
+
+function lessonDialog(l, day, period) {
+  const sel = new Set(l ? l.teachers.map(t => t.id) : []);
+  const f = dialog(`<h2>${l ? "Modifică lecția" : "Lecție nouă"}</h2>
+    <label class="f">Materia<select name="subject" required>${opts(ref.subjects.map(s => [s.id, s.name]), l && l.subject_id, "— alege —")}</select></label>
+    <div class="two"><label class="f">Ziua<select name="day">${opts(DAYS.map((d, i) => [i + 1, d]), l ? l.day_of_week : day)}</select></label>
+    <label class="f">Ora<select name="period">${opts(ref.bells.map(b => [b.period, `Ora ${b.period} · ${hm(b.starts_at)}–${hm(b.ends_at)}`]), l ? l.period : period)}</select></label></div>
+    <div class="two"><label class="f">Sala<select name="room">${opts(ref.rooms.map(r => [r.id, r.name]), l && l.room_id, "— fără sală —")}</select></label>
+    <label class="f">Grupa (opțional)<input name="group" value="${esc(l ? l.group_name : "")}" placeholder="toată clasa"></label></div>
+    <div class="f"><span style="font-weight:600;font-size:13px;color:var(--mut)">Profesorii lecției (poți alege mai mulți)</span><div class="chk" id="tl"></div></div>
+    <div class="acts">${l ? `<button type="button" class="btn d l" id="del">Șterge lecția</button>` : ""}<button type="button" class="btn s" data-close>Anulează</button><button class="btn" type="submit">Salvează</button></div>`,
+  async fd => {
+    await D.saveLesson({ id: l && l.lesson_id, classId: S.classId, subjectId: +fd.get("subject"), day: +fd.get("day"), period: +fd.get("period"),
+      roomId: fd.get("room") ? +fd.get("room") : null, group: String(fd.get("group") || "").trim(), teacherIds: [...sel] });
+    toast("Lecția a fost salvată."); render();
+  });
+  const drawTeachers = () => {
+    const sid = +f.querySelector("[name=subject]").value || 0;
+    const list = ref.teachers.filter(t => t.active || sel.has(t.id))
+      .map(t => ({ t, rec: sid && t.subject_ids.includes(sid) }))
+      .sort((a, b) => (b.rec - a.rec) || a.t.display_name.localeCompare(b.t.display_name, "ro"));
+    $("#tl").innerHTML = list.length ? list.map(({ t, rec }) => `<label><input type="checkbox" value="${t.id}" ${sel.has(t.id) ? "checked" : ""}>
+      <span>${esc(t.display_name)}${rec ? '<span class="tag">predă materia</span>' : ""}</span></label>`).join("") : `<div class="empty">Nu ai adăugat încă profesori.</div>`;
+  };
+  $("#tl").onchange = e => { const v = +e.target.value; e.target.checked ? sel.add(v) : sel.delete(v); };
+  f.querySelector("[name=subject]").onchange = drawTeachers;
+  drawTeachers();
+  const del = $("#del");
+  if (del) del.onclick = guard(async () => {
+    if (!confirm("Ștergi această lecție din orar?")) return;
+    await D.deleteLesson(l.lesson_id); $("#dlg").close(); toast("Lecția a fost ștearsă."); render();
+  });
+}
+
+/* ================= ÎNLOCUIRI ================= */
+async function viewInl(m) {
+  if (!ref.classes.length) { m.innerHTML = `<div class="card empty">Adaugă mai întâi o clasă.</div>`; return; }
+  const [day, tt, subs] = await Promise.all([D.classDay(S.classId, S.date), D.loadTimetable(S.classId), D.substitutionsOn(S.date)]);
+  const wd = D.isoDow(new Date(S.date + "T12:00:00"));
+  let h = `<h1>Înlocuiri</h1><p class="sub">Marchează profesorul absent și alege înlocuitorul. Elevii primesc automat o notificare.</p>
+  <div class="bar">${classSelect()}<label class="f">Data<input type="date" id="dt" value="${esc(S.date)}"></label></div><div class="card">`;
+  if (!day.length) h += `<div class="empty">${wd > 5 ? "În această zi nu sunt ore." : "Clasa nu are lecții în această zi."}</div>`;
+  const remaining = l => {                       // profesorii lecției care nu sunt deja înlocuiți azi
+    const tl = tt.find(x => x.lesson_id === l.lesson_id);
+    return tl ? tl.teachers.filter(a => !subs.some(s => s.lesson_id === l.lesson_id && s.absent_teacher_id === a.id)) : [];
+  };
+  for (const l of day) {
+    const mine = subs.filter(s => s.lesson_id === l.lesson_id);
+    h += `<div class="ls"><div class="t"><b>${hm(l.starts_at)}</b><span>${hm(l.ends_at)}</span></div><div class="m"><b>${esc(l.subject_name)}${l.group_name ? " · " + esc(l.group_name) : ""}
+      ${l.substituted ? '<span class="tag w">Înlocuire</span>' : ""}</b>
+      <span>${l.substituted ? `${esc(l.teachers)} <s>${esc(l.original_teachers)}</s>` : esc(l.teachers || "fără profesor")} · ${esc(l.room || "fără sală")}${l.original_room && l.room !== l.original_room ? ` <s>${esc(l.original_room)}</s>` : ""}${l.reason ? " · " + esc(l.reason) : ""}</span></div>
+      ${mine.map(s => `<button class="btn s" data-undo="${s.id}">Revino la orarul inițial</button>`).join("")}
+      ${remaining(l).length ? `<button class="btn s" data-abs="${l.lesson_id}">Profesorul lipsește</button>` : ""}</div>`;
+  }
+  h += `</div><h1 style="margin-top:30px;font-size:19px">Anunț pentru elevi</h1><div class="bar"><input id="an" style="flex:1;min-width:220px" placeholder="ex: Mâine ora 1 se anulează">
+    <select id="anc">${opts([[S.classId, "Doar clasa aleasă"], ["", "Toată școala"]], S.classId)}</select><button class="btn" id="anb">Trimite</button></div>`;
+  m.innerHTML = h; bindClass();
+  $("#dt").onchange = e => { S.date = e.target.value || S.date; render(); };
+  $("#anb").onclick = guard(async () => {
+    const t = $("#an").value.trim(); if (!t) return;
+    await D.announce($("#anc").value ? +$("#anc").value : null, t); $("#an").value = ""; toast("Anunțul a fost trimis.");
+  });
+  m.onclick = guard(async e => {
+    const u = e.target.closest("[data-undo]"), a = e.target.closest("[data-abs]");
+    if (u) { await D.cancelSubstitution(+u.dataset.undo); toast("Înlocuirea a fost anulată."); render(); }
+    if (a) { const l = day.find(x => x.lesson_id === +a.dataset.abs); absentDialog(l, tt.find(x => x.lesson_id === l.lesson_id), remaining(l)); }
+  });
+}
+
+const absentDialog = guard(async (l, t, absents) => {
+  const cands = await D.freeTeachers(S.date, l.period, t.subject_id);
+  if (!absents.length) throw new Error("Lecția nu are niciun profesor. Adaugă unul din fila Orar.");
+  dialog(`<h2>${esc(l.subject_name)} · ora ${l.period}</h2>
+    ${absents.length > 1 ? `<label class="f">Cine lipsește?<select name="absent">${opts(absents.map(a => [a.id, a.name]))}</select></label>`
+      : `<input type="hidden" name="absent" value="${absents[0].id}"><p style="margin:0"><b>${esc(absents[0].name)}</b> lipsește.</p>`}
+    <div class="f"><span style="font-weight:600;font-size:13px;color:var(--mut)">Profesori liberi la această oră</span>
+    <div class="chk">${cands.length ? cands.map((c, i) => `<label><input type="radio" name="sub" value="${c.teacher_id}" ${i === 0 ? "checked" : ""}>
+      <span>${esc(c.display_name)}${c.teaches_subject ? '<span class="tag">recomandat</span>' : ""}</span></label>`).join("") : '<div class="empty">Niciun profesor liber.</div>'}</div></div>
+    <div class="two"><label class="f">Sala<select name="room">${opts(ref.rooms.filter(r => r.name !== l.original_room).map(r => [r.id, "Mută în " + r.name]), "", "Aceeași sală" + (l.original_room ? " (" + l.original_room + ")" : ""))}</select></label>
+    <label class="f">Motiv<select name="reason">${opts(REASONS.map(r => [r, r]))}</select></label></div>
+    <div class="acts"><button type="button" class="btn s" data-close>Anulează</button><button class="btn" type="submit" ${cands.length ? "" : "disabled"}>Confirmă înlocuirea</button></div>`,
+  async fd => {
+    await D.addSubstitution({ lessonId: l.lesson_id, date: S.date, absentTeacherId: +fd.get("absent"), substituteTeacherId: +fd.get("sub"),
+      roomId: fd.get("room") ? +fd.get("room") : null, reason: fd.get("reason") });
+    toast("Înlocuirea a fost confirmată. Elevii au primit notificarea."); render();
+  });
+});
+
+/* ================= TABELE SIMPLE: profesori, materii, săli, clase, ore ================= */
+const ENT = {
+  teachers: { title: "Profesori", sub: "Cine predă în școală și ce materii.", table: "teachers", order: "last_name,first_name", add: "Adaugă profesor",
+    fields: [{ k: "last_name", l: "Nume", req: 1 }, { k: "first_name", l: "Prenume" }, { k: "display_name", l: "Afișat ca (opțional)", ph: "Prof. Nume", nullable: 1 }, { k: "active", l: "Activ", t: "bool", def: true }],
+    row: r => [esc(r.display_name) + (r.active ? "" : ' <span class="tag w">inactiv</span>'), [r.first_name, r.last_name].filter(Boolean).join(" ") + " · " + (r.subject_ids.map(subjName).join(", ") || "fără materii")], subjects: true },
+  subjects: { title: "Materii", sub: "Culoarea apare în orar.", table: "subjects", order: "name", add: "Adaugă materie",
+    fields: [{ k: "name", l: "Denumire", req: 1 }, { k: "code", l: "Cod scurt (litere mici, ex: mat)", req: 1, pattern: "[a-z0-9_]+" }, { k: "color", l: "Culoare", t: "color", def: "#4338CA" }],
+    row: r => [`<span class="sw" style="background:${esc(r.color)};display:inline-block;vertical-align:-3px;margin-right:8px"></span>${esc(r.name)}`, esc(r.code)] },
+  rooms: { title: "Săli", sub: "Sălile în care au loc lecțiile.", table: "rooms", order: "name", add: "Adaugă sală",
+    fields: [{ k: "name", l: "Denumire (ex: Sala 14)", req: 1 }, { k: "capacity", l: "Locuri (opțional)", t: "number", nullable: 1 }],
+    row: r => [esc(r.name), r.capacity ? r.capacity + " locuri" : ""] },
+  classes: { title: "Clase", sub: "Clasele școlii.", table: "classes", order: "grade,letter", add: "Adaugă clasă",
+    fields: [{ k: "grade", l: "Clasa (1–12)", t: "number", req: 1, min: 1, max: 12 }, { k: "letter", l: "Litera (ex: B)", req: 1 }, { k: "homeroom_teacher_id", l: "Diriginte", t: "select", nullable: 1, opts: () => ref.teachers.map(t => [t.id, t.display_name]) }],
+    row: r => [esc(r.display_name), "Diriginte: " + esc((ref.teachers.find(t => t.id === r.homeroom_teacher_id) || {}).display_name || "—")] },
+  bells: { title: "Ore de apel", sub: "Numărul orelor din zi și când încep/se termină. Pentru al doilea schimb numerotează orele de la 7 în sus.", table: "bell_slots", pk: "period", order: "period", add: "Adaugă oră",
+    fields: [{ k: "period", l: "Numărul orei", t: "number", req: 1, min: 1, max: 12 }, { k: "starts_at", l: "Începe la", t: "time", req: 1 }, { k: "ends_at", l: "Se termină la", t: "time", req: 1 }],
+    row: r => ["Ora " + r.period, hm(r.starts_at) + " – " + hm(r.ends_at)] }
+};
+
+async function viewEntity(m, key) {
+  const E = ENT[key];
+  let rows = await D.select(E.table, E.subjects ? { select: "*,teacher_subjects(subject_id)", order: E.order } : { order: E.order });
+  if (E.subjects) rows = rows.map(r => Object.assign(r, { subject_ids: r.teacher_subjects.map(x => x.subject_id) }));
+  const pk = E.pk || "id";
+  m.innerHTML = `<h1>${E.title}</h1><p class="sub">${E.sub}</p><div class="bar"><button class="btn" id="add">${E.add}</button></div>
+  <div class="card">${rows.length ? rows.map(r => { const [a, b] = E.row(r); return `<div class="row"><div class="m"><b>${a}</b><span>${b || ""}</span></div>
+    <button class="btn s" data-e="${esc(r[pk])}">Modifică</button><button class="btn d" data-x="${esc(r[pk])}">Șterge</button></div>`; }).join("") : `<div class="empty">Nimic adăugat încă.</div>`}</div>`;
+  $("#add").onclick = () => entityDialog(key, null);
+  m.onclick = guard(async e => {
+    const ed = e.target.closest("[data-e]"), dl = e.target.closest("[data-x]");
+    if (ed) entityDialog(key, rows.find(r => String(r[pk]) === ed.dataset.e));
+    if (dl && confirm("Sigur vrei să ștergi?")) { await D.remove(E.table, dl.dataset.x, E.pk); await refreshRef(); toast("Șters."); render(); }
+  });
+}
+async function refreshRef() { ref = await D.loadReference(); }
+
+function entityDialog(key, row) {
+  const E = ENT[key], pk = E.pk || "id", sel = new Set(row && row.subject_ids || []);
+  const field = f => {
+    const v = row ? row[f.k] : f.def, id = `name="${f.k}"`;
+    if (f.t === "bool") return `<label class="f" style="grid-auto-flow:column;justify-content:start;align-items:center;gap:10px"><input type="checkbox" ${id} ${v ? "checked" : ""} style="width:18px;height:18px">${f.l}</label>`;
+    if (f.t === "select") return `<label class="f">${f.l}<select ${id}>${opts(f.opts(), v, "— niciunul —")}</select></label>`;
+    return `<label class="f">${f.l}<input ${id} type="${f.t || "text"}" value="${esc(f.t === "time" ? hm(v) : v)}" ${f.req ? "required" : ""} ${f.ph ? `placeholder="${esc(f.ph)}"` : ""} ${f.min != null ? `min="${f.min}" max="${f.max}"` : ""} ${f.pattern ? `pattern="${f.pattern}"` : ""}></label>`;
+  };
+  const f = dialog(`<h2>${row ? "Modifică" : E.add}</h2>${E.fields.map(field).join("")}
+    ${E.subjects ? `<div class="f"><span style="font-weight:600;font-size:13px;color:var(--mut)">Materii predate</span><div class="chk" id="sj">${ref.subjects.map(s => `<label><input type="checkbox" value="${s.id}" ${sel.has(s.id) ? "checked" : ""}>${esc(s.name)}</label>`).join("") || '<div class="empty">Adaugă mai întâi materii.</div>'}</div></div>` : ""}
+    <div class="acts"><button type="button" class="btn s" data-close>Anulează</button><button class="btn" type="submit">Salvează</button></div>`,
+  async fd => {
+    const body = {};
+    for (const fl of E.fields) {
+      let v = fd.get(fl.k);
+      if (fl.t === "bool") v = fd.get(fl.k) === "on";
+      else if (fl.t === "number" || fl.t === "select") v = v === "" || v == null ? null : Number(v);
+      else v = String(v == null ? "" : v).trim();
+      if (v === "" && fl.nullable) v = null;
+      body[fl.k] = v;
+    }
+    const saved = row ? await D.update(E.table, row[pk], body, E.pk) : await D.insert(E.table, body);
+    if (E.subjects) await D.setTeacherSubjects(saved.id, [...document.querySelectorAll("#sj input:checked")].map(i => +i.value));
+    await refreshRef(); toast("Salvat."); render();
+  });
+}
+
+/* ================= CONTURI ================= */
+async function viewAcc(m) {
+  const rows = await D.select("profiles", { order: "created_at.desc" });
+  m.innerHTML = `<h1>Conturi</h1><p class="sub">Conturile se creează în Supabase (Authentication). Aici le dai rolul potrivit: elev, profesor sau administrator.</p>
+  <div class="card">${rows.map(r => `<div class="row" data-id="${r.id}"><div class="m"><b>${esc(r.email || r.id)}</b><span>${esc(r.full_name || "")}</span></div>
+    <select data-f="role" ${r.id === me.id ? "disabled title='Nu îți poți schimba singur rolul'" : ""}>${opts([["elev", "Elev"], ["profesor", "Profesor"], ["admin", "Administrator"]], r.role)}</select>
+    <select data-f="teacher_id">${opts(ref.teachers.map(t => [t.id, t.display_name]), r.teacher_id, "— profesor —")}</select></div>`).join("") || `<div class="empty">Niciun cont.</div>`}</div>`;
+  m.onchange = guard(async e => {
+    const row = e.target.closest("[data-id]"), f = e.target.dataset.f; if (!row || !f) return;
+    await D.update("profiles", row.dataset.id, { [f]: e.target.value === "" ? null : (f === "teacher_id" ? Number(e.target.value) : e.target.value) });
+    toast("Contul a fost actualizat.");
+  });
+}
+
+start();
+</script></body></html>
